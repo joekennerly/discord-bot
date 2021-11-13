@@ -26,20 +26,6 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.errors.CheckFailure):
         await ctx.send('You do not have the correct role for this command.')
 
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-    hi = re.compile(r'hi')
-    good = re.compile(r'good')
-    
-    is_hi = hi.search(message.content)
-    is_good = good.search(message.content)
-    if is_hi: 
-        await message.channel.send('hi')
-    elif is_good:
-        await message.channel.send('happy')
-
 @bot.command(name='create-channel', help='Creates a new channel')
 @commands.has_role('admin')
 async def create_channel(ctx, channel_name='real-python'):
@@ -70,5 +56,20 @@ async def roll(ctx, number_of_dice: int, number_of_sides: int):
         for _ in range(number_of_dice)
     ]
     await ctx.send(', '.join(dice))
+
+# Regex matching
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    hi = re.compile(r'hi')
+    good = re.compile(r'good')
+    
+    is_hi = hi.search(message.content)
+    is_good = good.search(message.content)
+    if is_hi: 
+        await message.channel.send('hi')
+    elif is_good:
+        await message.channel.send('happy')
 
 bot.run(TOKEN)
